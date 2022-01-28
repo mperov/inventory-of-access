@@ -14,11 +14,15 @@ def getUsers():
                 users.append(splited[0])
     return users
 
-def getGroups():
-    groups = []
+def getGroups(excluded = []):
+    groups = {}
     with open("/etc/group" , "r") as f:
         for line in f.readlines():
-            groups.append(line.split(":")[0])
+            _list = line.split(":")
+            name = _list[0]
+            participants = _list[3]
+            if participants.strip() != '' and name not in excluded:
+                groups.update({ name : participants.split('\n')[0].split(',') })
     return groups
 
 if __name__ == "__main__":
