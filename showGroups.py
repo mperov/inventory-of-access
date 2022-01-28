@@ -3,9 +3,12 @@
 
 TARGET_GROUPS = [ ]
 
-if __name__ == "__main__":
+def getGroups():
     groups = []
     with open("/etc/group" , "r") as f:
         for line in f.readlines():
             groups.append(line.split(":")[0])
-    print(groups)
+    return groups
+
+if __name__ == "__main__":
+    print(getGroups())
