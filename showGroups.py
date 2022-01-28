@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-TARGET_GROUPS = [ ]
+from prettytable import PrettyTable
 
 def getUsers():
     users = []
@@ -24,6 +24,18 @@ def getGroups(excluded = []):
             if participants.strip() != '' and name not in excluded:
                 groups.update({ name : participants.split('\n')[0].split(',') })
     return groups
+
+def showPretty(users, groups):
+    table = PrettyTable(['users'] + list(groups))
+    for user in users:
+        marks = []
+        for group in groups:
+            if user in groups[group]:
+                marks.append('+')
+            else:
+                marks.append('-')
+        table.add_row([user] + marks)
+    print(table)
 
 if __name__ == "__main__":
     print(getGroups())
