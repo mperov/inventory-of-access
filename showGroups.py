@@ -3,15 +3,16 @@
 
 from prettytable import PrettyTable
 
-def getUsers():
+def getUsers(excluded = []):
     users = {}
     with open("/etc/passwd" , "r") as f:
         for line in f.readlines():
             splited = line.split(":")
             shell = splited[-1:][0].split('\n')[0].split('/')[-1:][0]
             homePath = splited[-2:][0].split('/')
-            if 'home' in homePath and shell in ['bash', 'sh']:
-                users.update({splited[0] : [splited[2], splited[3]]})
+            name = splited[0]
+            if 'home' in homePath and shell in ['bash', 'sh'] and name not in excluded:
+                users.update({name : [splited[2], splited[3]]})
     return users
 
 def getGroups(excluded = []):
