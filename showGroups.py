@@ -26,7 +26,7 @@ def getGroups(excluded = []):
     return groups
 
 def showPretty(users, groups):
-    table = PrettyTable(['users'] + list(groups))
+    table = PrettyTable(['users'] + [group[0] for group in list(groups)])
     for user in users:
         marks = []
         for group in groups:
