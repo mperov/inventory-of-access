@@ -22,7 +22,7 @@ def getGroups(excluded = []):
             name = _list[0]
             participants = _list[3]
             if participants.strip() != '' and name not in excluded:
-                groups.update({ name : participants.split('\n')[0].split(',') })
+                groups.update({ (name, _list[2]) : participants.split('\n')[0].split(',') })
     return groups
 
 def showPretty(users, groups):
