@@ -37,11 +37,22 @@ def getGroups(excluded = [], included = []):
                     groups.update({ (name, _list[2]) : participants.split('\n')[0].split(',') })
     return groups
 
-def showPretty(users, groups):
-    table = PrettyTable(['users'] + [group[0] for group in list(groups)])
+def showPretty(users, groups, reducing = True):
+    lng = [group[0] for group in list(groups)]
+    if reducing:
+        for group in groups:
+            count_minus = 0
+            for user in users:
+                if not user in groups[group]:
+                    count_minus += 1
+            if len(users) == count_minus:
+                lng.remove(group[0])
+    table = PrettyTable(['users'] + lng)
     for user in users:
         marks = []
         for group in groups:
+            if group[0] not in lng:
+                continue
             if user in groups[group]:
                 marks.append('+')
             else:
@@ -61,6 +72,8 @@ if __name__ == "__main__":
                         help="list of users which you would like to include", metavar="root,user1,...")
     parser.add_argument("-ig", "--included-groups", dest="ig",
                         help="list of groups which you would like to include", metavar="wheel,kvm,...")
+    parser.add_argument("-r", "--reducing", action='store_true',
+                        help="it allows to reduce table. This option deletes groups which don't have any participant.")
     args = parser.parse_args()
     eu, eg = [], []
     if args.eu:
@@ -73,8 +86,9 @@ if __name__ == "__main__":
     if args.ig:
         ig = args.ig.split(',')
     if args.mode:
+        reducing = args.reducing
         mode = args.mode.strip()
         if mode == 'table':
             users = getUsers(excluded = eu, included = iu)
             groups = getGroups(excluded = eg, included = ig)
-            showPretty(users, groups)
+            showPretty(users, groups, reducing = reducing)
