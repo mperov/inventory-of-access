@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from argparse import ArgumentParser
 from prettytable import PrettyTable
 
 def getUsers(excluded = []):
@@ -39,4 +40,31 @@ def showPretty(users, groups):
     print(table)
 
 if __name__ == "__main__":
-    print(getGroups())
+    parser = ArgumentParser()
+    parser.add_argument("-m", "--mode", dest="mode",
+                        help="working mode", metavar="table")
+    parser.add_argument("-eu", "--excluded-users", dest="eu",
+                        help="list of users which are excluded", metavar="root,user1,...")
+    parser.add_argument("-eg", "--excluded-groups", dest="eg",
+                        help="list of groups which are excluded", metavar="wheel,kvm,...")
+    parser.add_argument("-iu", "--included-users", dest="iu",
+                        help="list of users which you would like to include", metavar="root,user1,...")
+    parser.add_argument("-ig", "--included-groups", dest="ig",
+                        help="list of groups which you would like to include", metavar="wheel,kvm,...")
+    args = parser.parse_args()
+    eu, eg = [], []
+    if args.eu:
+        eu = args.eu.split(',')
+    if args.eg:
+        eg = args.eg.split(',')
+    iu, ig = [], []
+    if args.iu:
+        iu = args.iu.split(',')
+    if args.ig:
+        ig = args.ig.split(',')
+    if args.mode:
+        mode = args.mode.strip()
+        if mode == 'table':
+            users = getUsers(excluded = eu)
+            groups = getGroups(excluded = eg)
+            showPretty(users, groups)
