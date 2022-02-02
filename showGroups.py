@@ -66,7 +66,7 @@ def showPrettyUsers(users):
         table.add_row([user, users[user][0], users[user][1]])
     print(table)
 
-def showPrettyUsers(groups):
+def showPrettyGroups(groups):
     table = PrettyTable(['groups', 'GID'])
     for group in groups:
         table.add_row([group[0], group[1]])
