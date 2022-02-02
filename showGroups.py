@@ -109,4 +109,4 @@ if __name__ == "__main__":
             showPrettyUsers(users)
         elif mode == 'group':
             groups = getGroups(excluded = eg, included = ig)
-            showPrettyUsers(groups)
+            showPrettyGroups(groups)
