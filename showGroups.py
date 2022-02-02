@@ -60,10 +60,16 @@ def showPretty(users, groups, reducing = True):
         table.add_row([user] + marks)
     print(table)
 
+def showPrettyUsers(users):
+    table = PrettyTable(['users', 'UID', 'GID'])
+    for user in users:
+        table.add_row([user, users[user][0], users[user][1]])
+    print(table)
+
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-m", "--mode", dest="mode",
-                        help="working mode", metavar="table")
+                        help="working mode", metavar="table,user")
     parser.add_argument("-eu", "--excluded-users", dest="eu",
                         help="list of users which are excluded", metavar="root,user1,...")
     parser.add_argument("-eg", "--excluded-groups", dest="eg",
@@ -92,3 +98,6 @@ if __name__ == "__main__":
             users = getUsers(excluded = eu, included = iu)
             groups = getGroups(excluded = eg, included = ig)
             showPretty(users, groups, reducing = reducing)
+        elif mode == 'user':
+            users = getUsers(excluded = eu, included = iu)
+            showPrettyUsers(users)
