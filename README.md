@@ -1,4 +1,5 @@
 # showGroups
+[![Contributors](https://img.shields.io/github/contributors/mperov/showGroups?label=Contributors)](https://github.com/mperov/showGroups/graphs/contributors)
 
 ### Description
 This project shows what Linux users in what groups
