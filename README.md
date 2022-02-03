@@ -1,4 +1,4 @@
-# showGroups
+# Inventory of access
 [![Contributors](https://img.shields.io/github/contributors/mperov/showGroups?label=Contributors)](https://github.com/mperov/showGroups/graphs/contributors)
 
 ### Description
