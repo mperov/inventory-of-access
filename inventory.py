@@ -125,5 +125,7 @@ if __name__ == "__main__":
                 to_json.update({ name : { "GID" : GID, "users" : groups[group]}})
             hashsum = hashlib.md5(json.dumps(to_json, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
+        else:
+            parser.print_help()
     else:
         parser.print_help()
