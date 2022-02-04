@@ -81,7 +81,9 @@ def showPrettyGroups(groups):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-m", "--mode", dest="mode",
-                        help="working mode. This argument is main!", metavar="table or user or group or hash")
+                        help="working mode. This argument is main!", metavar="table or user or group")
+    parser.add_argument("-gh", "--get-hash", dest="hash",
+                        help="getting of hash. This is alternative argument to main!", metavar="all or group or user")
     parser.add_argument("-eu", "--excluded-users", dest="eu",
                         help="list of users which are excluded", metavar="root,user1,...")
     parser.add_argument("-eg", "--excluded-groups", dest="eg",
@@ -116,7 +118,11 @@ if __name__ == "__main__":
         elif mode == 'group':
             groups = getGroups(excluded = eg, included = ig)
             showPrettyGroups(groups)
-        elif mode == 'hash':
+        else:
+            parser.print_help()
+    elif args.hash:
+        mode = args.hash.strip()
+        if mode == 'all':
             groups = getGroups(excluded = eg, included = ig)
             to_json = {}
             for group in groups:
@@ -125,7 +131,18 @@ if __name__ == "__main__":
                 to_json.update({ name : { "GID" : GID, "users" : groups[group]}})
             hashsum = hashlib.md5(json.dumps(to_json, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
-        else:
-            parser.print_help()
+        elif mode == 'group':
+            groups = getGroups(excluded = eg, included = ig)
+            to_json = {}
+            for group in groups:
+                name = group[0]
+                GID = group[1]
+                to_json.update({ name : GID })
+            hashsum = hashlib.md5(json.dumps(to_json, sort_keys=True).encode('utf-8')).hexdigest()
+            print(hashsum)
+        elif mode == 'user':
+            users = getUsers(excluded = eu, included = iu)
+            hashsum = hashlib.md5(json.dumps(users, sort_keys=True).encode('utf-8')).hexdigest()
+            print(hashsum)
     else:
         parser.print_help()
