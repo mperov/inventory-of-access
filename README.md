@@ -11,7 +11,7 @@ Moreover this project can help to synchronize users and groups in clusters. In m
 NFS server requires synchronized UIDs and GIDs on all machines in clusters.
 
 ### Requirements
-Install some Python modules - `pip3 install -r requirements`  
+Install some Python modules - `pip3 install -r requirements` or `python3 -m pip install -r requirements`  
 If you don't have pip3 then you may install it [how described here](https://pip.pypa.io/en/stable/installation/)
 
 ### Planning
