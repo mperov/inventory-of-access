@@ -27,7 +27,7 @@ def getUsers(excluded = [], included = []):
                     users.update({name : [splited[2], splited[3]]})
     return users
 
-def getGroups(excluded = [], included = []):
+def getGroups(excluded = [], included = [], excludedUsers = []):
     groups = {}
     with open("/etc/group" , "r") as f:
         for line in f.readlines():
@@ -35,12 +35,16 @@ def getGroups(excluded = [], included = []):
             name = _list[0]
             participants = _list[3]
             if participants.strip() != '':
+                users = sorted(participants.split('\n')[0].split(','))
+                for user in excludedUsers:
+                    if user in users:
+                        users.remove(user)
                 if included and name in included:
-                    groups.update({ name : { 'GID' : _list[2], 'users' : sorted(participants.split('\n')[0].split(',')) }})
+                    groups.update({ name : { 'GID' : _list[2], 'users' : users }})
                 elif excluded and name not in excluded:
-                    groups.update({ name : { 'GID' : _list[2], 'users' : sorted(participants.split('\n')[0].split(',')) }})
+                    groups.update({ name : { 'GID' : _list[2], 'users' : users }})
                 elif included == [] and excluded == []:
-                    groups.update({ name : { 'GID' : _list[2], 'users' : sorted(participants.split('\n')[0].split(',')) }})
+                    groups.update({ name : { 'GID' : _list[2], 'users' : users }})
     return groups
 
 def showPretty(users, groups, reducing = True):
@@ -124,7 +128,7 @@ if __name__ == "__main__":
     elif args.hash:
         mode = args.hash.strip()
         if mode == 'all':
-            groups = getGroups(excluded = eg, included = ig)
+            groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
             hashsum = hashlib.md5(json.dumps(groups, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
         elif mode == 'group':
