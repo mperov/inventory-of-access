@@ -36,11 +36,11 @@ def getGroups(excluded = [], included = []):
             participants = _list[3]
             if participants.strip() != '':
                 if included and name in included:
-                    groups.update({ name : { 'GID' : _list[2], 'users' : participants.split('\n')[0].split(',') }})
+                    groups.update({ name : { 'GID' : _list[2], 'users' : sorted(participants.split('\n')[0].split(',')) }})
                 elif excluded and name not in excluded:
-                    groups.update({ name : { 'GID' : _list[2], 'users' : participants.split('\n')[0].split(',') }})
+                    groups.update({ name : { 'GID' : _list[2], 'users' : sorted(participants.split('\n')[0].split(',')) }})
                 elif included == [] and excluded == []:
-                    groups.update({ name : { 'GID' : _list[2], 'users' : participants.split('\n')[0].split(',') }})
+                    groups.update({ name : { 'GID' : _list[2], 'users' : sorted(participants.split('\n')[0].split(',')) }})
     return groups
 
 def showPretty(users, groups, reducing = True):
