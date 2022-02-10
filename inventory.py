@@ -125,12 +125,7 @@ if __name__ == "__main__":
         mode = args.hash.strip()
         if mode == 'all':
             groups = getGroups(excluded = eg, included = ig)
-            to_json = {}
-            for group in groups:
-                name = group[0]
-                GID = group[1]
-                to_json.update({ name : { "GID" : GID, "users" : groups[group]}})
-            hashsum = hashlib.md5(json.dumps(to_json, sort_keys=True).encode('utf-8')).hexdigest()
+            hashsum = hashlib.md5(json.dumps(groups, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
         elif mode == 'group':
             groups = getGroups(excluded = eg, included = ig)
