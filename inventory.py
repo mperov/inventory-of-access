@@ -36,30 +36,31 @@ def getGroups(excluded = [], included = []):
             participants = _list[3]
             if participants.strip() != '':
                 if included and name in included:
-                    groups.update({ (name, _list[2]) : participants.split('\n')[0].split(',') })
+                    groups.update({ name : { 'GID' : _list[2], 'users' : participants.split('\n')[0].split(',') }})
                 elif excluded and name not in excluded:
-                    groups.update({ (name, _list[2]) : participants.split('\n')[0].split(',') })
+                    groups.update({ name : { 'GID' : _list[2], 'users' : participants.split('\n')[0].split(',') }})
                 elif included == [] and excluded == []:
-                    groups.update({ (name, _list[2]) : participants.split('\n')[0].split(',') })
+                    groups.update({ name : { 'GID' : _list[2], 'users' : participants.split('\n')[0].split(',') }})
     return groups
 
 def showPretty(users, groups, reducing = True):
-    lng = [group[0] for group in list(groups)]
+    lng = [group for group in list(groups)]
+    lng = sorted(lng)
     if reducing:
         for group in groups:
             count_minus = 0
             for user in users:
-                if not user in groups[group]:
+                if not user in groups[group]['users']:
                     count_minus += 1
             if len(users) == count_minus:
-                lng.remove(group[0])
+                lng.remove(group)
     table = PrettyTable(['users'] + lng)
     for user in users:
         marks = []
-        for group in groups:
-            if group[0] not in lng:
+        for group in sorted(groups):
+            if group not in lng:
                 continue
-            if user in groups[group]:
+            if user in groups[group]['users']:
                 marks.append('+')
             else:
                 marks.append('-')
@@ -75,7 +76,7 @@ def showPrettyUsers(users):
 def showPrettyGroups(groups):
     table = PrettyTable(['groups', 'GID'])
     for group in groups:
-        table.add_row([group[0], group[1]])
+        table.add_row([group, groups[group]['GID']])
     print(table)
 
 if __name__ == "__main__":
@@ -133,12 +134,7 @@ if __name__ == "__main__":
             print(hashsum)
         elif mode == 'group':
             groups = getGroups(excluded = eg, included = ig)
-            to_json = {}
-            for group in groups:
-                name = group[0]
-                GID = group[1]
-                to_json.update({ name : GID })
-            hashsum = hashlib.md5(json.dumps(to_json, sort_keys=True).encode('utf-8')).hexdigest()
+            hashsum = hashlib.md5(json.dumps(groups, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
         elif mode == 'user':
             users = getUsers(excluded = eu, included = iu)
