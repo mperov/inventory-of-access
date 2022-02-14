@@ -9,7 +9,6 @@ from argparse import ArgumentParser
 from prettytable import PrettyTable
 import hashlib
 import json
-from ansible import *
 
 def getUsers(excluded = [], included = []):
     users = {}
@@ -153,6 +152,7 @@ if __name__ == "__main__":
             hashsum = hashlib.md5(json.dumps(users, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
     elif args.yaml:
+        from ansible import *
         mode = args.yaml.strip()
         if mode == 'additions':
             users = getUsers(excluded = eu, included = iu)
