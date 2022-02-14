@@ -38,19 +38,20 @@ def getPingPlayBook():
 def getAdditionsPlayBook(users = [], groups = []):
     content = [
                 {
-                    'name'  : 'Add user to additional groups',
-                    'hosts' : 'all',
+                    'name'      : 'Add user to additional groups',
+                    'hosts'     : 'all',
+                    'become'    : 'yes',
                 }
               ]
     tasks = []
     for user in users:
-        task = { 'name' : 'add ' + user + ' to additional groups', 'append' : 'yes'}
+        task = { 'name' : 'adding ' + user, 'user' : {'name' : user, 'append' : 'yes'}}
         grp = []
         for group in groups:
             if user in groups[group]['users']:
                 grp.append(group)
         grps = ','.join(grp)
-        task.update({'groups' : grps})
+        task['user'].update({'groups' : grps})
         if grps != '':
             tasks.append(task)
     content[0].update({ 'tasks' : tasks })
