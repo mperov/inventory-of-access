@@ -99,7 +99,10 @@ if __name__ == "__main__":
                         help="list of groups which you would like to include", metavar="wheel,kvm,...")
     parser.add_argument("-r", "--reducing", action='store_true',
                         help="it allows to reduce table. This option deletes groups which don't have any participant.")
+    parser.add_argument("-d", "--debug", action='store_true',
+                        help="this option enables debug mode")
     args = parser.parse_args()
+    debug = args.debug
     eu, eg = [], []
     if args.eu:
         eu = args.eu.split(',')
@@ -129,6 +132,8 @@ if __name__ == "__main__":
         mode = args.hash.strip()
         if mode == 'all':
             groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
+            if debug:
+                print(json.dumps(groups, indent=4, sort_keys=True))
             hashsum = hashlib.md5(json.dumps(groups, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
         elif mode == 'group':
