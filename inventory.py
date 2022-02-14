@@ -9,6 +9,7 @@ from argparse import ArgumentParser
 from prettytable import PrettyTable
 import hashlib
 import json
+from ansible import *
 
 def getUsers(excluded = [], included = []):
     users = {}
@@ -89,6 +90,8 @@ if __name__ == "__main__":
                         help="working mode. This argument is main!", metavar="table or user or group")
     parser.add_argument("-gh", "--get-hash", dest="hash",
                         help="getting of hash. This is alternative argument to main!", metavar="all or group or user")
+    parser.add_argument("-y", "--yaml", dest="yaml",
+                        help="generating yaml which can be used to ansible. This is alternative argument to main!", metavar="all or user or group")
     parser.add_argument("-eu", "--excluded-users", dest="eu",
                         help="list of users which are excluded", metavar="root,user1,...")
     parser.add_argument("-eg", "--excluded-groups", dest="eg",
@@ -149,5 +152,8 @@ if __name__ == "__main__":
             users = getUsers(excluded = eu, included = iu)
             hashsum = hashlib.md5(json.dumps(users, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
+    elif args.yaml:
+        mode = args.yaml.strip()
+        print(getAnsibleYAML())
     else:
         parser.print_help()
