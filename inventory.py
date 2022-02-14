@@ -154,6 +154,7 @@ if __name__ == "__main__":
             print(hashsum)
     elif args.yaml:
         mode = args.yaml.strip()
-        print(getAnsibleYAML())
+        if debug:
+            print(getPlayBook(), end = '')
     else:
         parser.print_help()
