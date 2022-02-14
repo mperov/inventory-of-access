@@ -17,13 +17,13 @@ class CustomYAML(YAML):
         if inefficient:
             return stream.getvalue()
 
-def getPlayBook():
-    content = [
+def getPingPlayBook():
+    content = [ # using list allows to prepend '-' (dash symbol)
                 {
                     'name'  : 'Ping pong',
                     'hosts' : 'all',
                     'tasks' :
-                    [
+                    [ # using list allows to prepend '-' (dash symbol)
                         {
                             'name' : 'Ping',
                             'ping' : None,
@@ -31,6 +31,29 @@ def getPlayBook():
                     ],
                 }
               ]
+    yaml = CustomYAML()
+    yaml.explicit_start = True # --- at the beginning of yaml
+    return yaml.dump(content)
+
+def getAdditionsPlayBook(users = [], groups = []):
+    content = [
+                {
+                    'name'  : 'Add user to additional groups',
+                    'hosts' : 'all',
+                }
+              ]
+    tasks = []
+    for user in users:
+        task = { 'name' : 'add ' + user + ' to additional groups', 'append' : 'yes'}
+        grp = []
+        for group in groups:
+            if user in groups[group]['users']:
+                grp.append(group)
+        grps = ','.join(grp)
+        task.update({'groups' : grps})
+        if grps != '':
+            tasks.append(task)
+    content[0].update({ 'tasks' : tasks })
     yaml = CustomYAML()
     yaml.explicit_start = True # --- at the beginning of yaml
     return yaml.dump(content)
