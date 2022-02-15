@@ -161,6 +161,10 @@ if __name__ == "__main__":
             groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
             if debug:
                 print(getUsersPlayBook(users, groups), end = '')
+        elif mode == 'groups':
+            groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
+            if debug:
+                print(getGroupsPlayBook(groups), end = '')
         else:
             print("This feature wasn't implemented!")
     else:

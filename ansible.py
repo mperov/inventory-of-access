@@ -58,3 +58,20 @@ def getUsersPlayBook(users = [], groups = []):
     yaml = CustomYAML()
     yaml.explicit_start = True # --- at the beginning of yaml
     return yaml.dump(content)
+
+def getGroupsPlayBook(groups = []):
+    content = [
+                {
+                    'name'      : 'Add additional groups',
+                    'hosts'     : 'all',
+                    'become'    : 'yes',
+                }
+              ]
+    tasks = []
+    for group in groups:
+        task = { 'name' : 'adding ' + group, 'group' : {'name' : group, 'gid' : groups[group]['GID']} }
+        tasks.append(task)
+    content[0].update({ 'tasks' : tasks })
+    yaml = CustomYAML()
+    yaml.explicit_start = True # --- at the beginning of yaml
+    return yaml.dump(content)
