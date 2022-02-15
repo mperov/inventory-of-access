@@ -6,7 +6,6 @@
 #
 
 from argparse import ArgumentParser
-from prettytable import PrettyTable
 import hashlib
 import json
 
@@ -48,6 +47,7 @@ def getGroups(excluded = [], included = [], excludedUsers = []):
     return groups
 
 def showPretty(users, groups, reducing = True):
+    from prettytable import PrettyTable
     lng = [group for group in list(groups)]
     lng = sorted(lng)
     if reducing:
@@ -72,12 +72,14 @@ def showPretty(users, groups, reducing = True):
     print(table)
 
 def showPrettyUsers(users):
+    from prettytable import PrettyTable
     table = PrettyTable(['users', 'UID', 'GID'])
     for user in users:
         table.add_row([user, users[user][0], users[user][1]])
     print(table)
 
 def showPrettyGroups(groups):
+    from prettytable import PrettyTable
     table = PrettyTable(['groups', 'GID'])
     for group in groups:
         table.add_row([group, groups[group]['GID']])
