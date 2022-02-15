@@ -9,9 +9,12 @@ from argparse import ArgumentParser
 import hashlib
 import json
 
+FILE_PASSWD = "/etc/passwd"
+FILE_GROUP  = "/etc/group"
+
 def getUsers(excluded = [], included = []):
     users = {}
-    with open("/etc/passwd" , "r") as f:
+    with open(FILE_PASSWD, "r") as f:
         for line in f.readlines():
             splited = line.split(":")
             shell = splited[-1:][0].split('\n')[0].split('/')[-1:][0]
@@ -28,7 +31,7 @@ def getUsers(excluded = [], included = []):
 
 def getGroups(excluded = [], included = [], excludedUsers = []):
     groups = {}
-    with open("/etc/group" , "r") as f:
+    with open(FILE_GROUP, "r") as f:
         for line in f.readlines():
             _list = line.split(":")
             name = _list[0]

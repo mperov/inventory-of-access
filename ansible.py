@@ -8,6 +8,8 @@ import sys
 from ruamel.yaml import YAML
 from ruamel.yaml.compat import StringIO
 
+FILE_PLAYBOOK = "playbook.yml"
+
 class CustomYAML(YAML):
     def dump(self, data, stream=None, **kw):
         inefficient = False
@@ -79,11 +81,11 @@ def getGroupsPlayBook(groups = []):
 
 def writePlayBook(playbook = getPingPlayBook()):
     try:
-        with open("playbook.yml" , "w") as f:
+        with open(FILE_PLAYBOOK , "w") as f:
             f.write(playbook)
     except Exception as e:
-        print("ERROR: playbook.yml isn't writable!")
+        print("ERROR: " + FILE_PLAYBOOK + " isn't writable!")
         print(str(e))
         sys.exit(-1)
-    print('YAML is successfully generating to playbook.yml!')
+    print('YAML is successfully generating to ' + FILE_PLAYBOOK)
     print('This file in your current directory!')
