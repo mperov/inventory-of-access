@@ -153,6 +153,8 @@ if __name__ == "__main__":
             users = getUsers(excluded = eu, included = iu)
             hashsum = hashlib.md5(json.dumps(users, sort_keys=True).encode('utf-8')).hexdigest()
             print(hashsum)
+        else:
+            parser.print_help()
     elif args.yaml:
         from ansible import *
         mode = args.yaml.strip()
@@ -166,6 +168,6 @@ if __name__ == "__main__":
             if debug:
                 print(getGroupsPlayBook(groups), end = '')
         else:
-            print("This feature wasn't implemented!")
+            parser.print_help()
     else:
         parser.print_help()
