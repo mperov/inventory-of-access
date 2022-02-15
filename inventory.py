@@ -163,10 +163,16 @@ if __name__ == "__main__":
             groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
             if debug:
                 print(getUsersPlayBook(users, groups), end = '')
+            else:
+                playbook = getUsersPlayBook(users, groups)
+                writePlayBook(playbook)
         elif mode == 'groups':
             groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
             if debug:
                 print(getGroupsPlayBook(groups), end = '')
+            else:
+                playbook = getGroupsPlayBook(groups)
+                writePlayBook(playbook)
         else:
             parser.print_help()
     else:

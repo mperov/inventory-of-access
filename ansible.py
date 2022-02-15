@@ -4,6 +4,7 @@
 # Copyright (c) 2022 Maksim Perov <coder@frtk.ru>
 #
 
+import sys
 from ruamel.yaml import YAML
 from ruamel.yaml.compat import StringIO
 
@@ -75,3 +76,14 @@ def getGroupsPlayBook(groups = []):
     yaml = CustomYAML()
     yaml.explicit_start = True # --- at the beginning of yaml
     return yaml.dump(content)
+
+def writePlayBook(playbook = getPingPlayBook()):
+    try:
+        with open("playbook.yml" , "w") as f:
+            f.write(playbook)
+    except Exception as e:
+        print("ERROR: playbook.yml isn't writable!")
+        print(str(e))
+        sys.exit(-1)
+    print('YAML is successfully generating to playbook.yml!')
+    print('This file in your current directory!')
