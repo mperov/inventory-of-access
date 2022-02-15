@@ -38,14 +38,14 @@ def getPingPlayBook():
 def getUsersPlayBook(users = [], groups = []):
     content = [
                 {
-                    'name'      : 'Add user to additional groups',
+                    'name'      : 'Add user with UID, GID and additional groups',
                     'hosts'     : 'all',
                     'become'    : 'yes',
                 }
               ]
     tasks = []
     for user in users:
-        task = { 'name' : 'adding ' + user, 'user' : {'name' : user, 'append' : 'yes', 'uid' : str(users[user][0]), 'group' : str(users[user][1])}}
+        task = { 'name' : 'adding ' + user, 'user' : {'name' : user, 'append' : 'yes', 'uid' : str(users[user][0]), 'group' : str(users[user][1])} }
         grp = []
         for group in groups:
             if user in groups[group]['users']:
