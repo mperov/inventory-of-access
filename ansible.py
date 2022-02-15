@@ -88,4 +88,4 @@ def writePlayBook(playbook = getPingPlayBook()):
         print(str(e))
         sys.exit(-1)
     print('YAML is successfully generating to ' + FILE_PLAYBOOK)
-    print('This file in your current directory!')
+    print('This file should be in your current directory!')
