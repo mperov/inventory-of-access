@@ -35,7 +35,7 @@ def getPingPlayBook():
     yaml.explicit_start = True # --- at the beginning of yaml
     return yaml.dump(content)
 
-def getAdditionsPlayBook(users = [], groups = []):
+def getUsersPlayBook(users = [], groups = []):
     content = [
                 {
                     'name'      : 'Add user to additional groups',

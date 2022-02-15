@@ -92,7 +92,7 @@ if __name__ == "__main__":
     parser.add_argument("-gh", "--get-hash", dest="hash",
                         help="getting of hash. This is alternative argument to main!", metavar="all or group or user")
     parser.add_argument("-y", "--yaml", dest="yaml",
-                        help="generating yaml which can be used to ansible. This is alternative argument to main!", metavar="additions or users or groups")
+                        help="generating yaml which can be used to ansible. This is alternative argument to main!", metavar="users or groups")
     parser.add_argument("-eu", "--excluded-users", dest="eu",
                         help="list of users which are excluded", metavar="root,user1,...")
     parser.add_argument("-eg", "--excluded-groups", dest="eg",
@@ -156,11 +156,11 @@ if __name__ == "__main__":
     elif args.yaml:
         from ansible import *
         mode = args.yaml.strip()
-        if mode == 'additions':
+        if mode == 'users':
             users = getUsers(excluded = eu, included = iu)
             groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
             if debug:
-                print(getAdditionsPlayBook(users, groups), end = '')
+                print(getUsersPlayBook(users, groups), end = '')
         else:
             print("This feature wasn't implemented!")
     else:
