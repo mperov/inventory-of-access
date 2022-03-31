@@ -48,7 +48,7 @@ def getUsersPlayBook(users = [], groups = []):
               ]
     tasks = []
     for user in users:
-        task = { 'name' : 'adding ' + user, 'user' : {'name' : user, 'append' : 'yes', 'uid' : str(users[user][0]), 'group' : str(users[user][1]), 'expires' : 0} }
+        task = { 'name' : 'adding ' + user, 'user' : {'name' : user, 'append' : 'yes', 'uid' : str(users[user][0]), 'group' : str(users[user][1]), 'expires' : 0, 'create_home' : 'no'} }
         grp = []
         for group in groups:
             if user in groups[group]['users']:
