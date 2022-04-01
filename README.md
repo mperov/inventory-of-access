@@ -114,3 +114,7 @@ $ cat playbook.yml
       create_home: no
       groups: adm,voice,cdrom,sudo
 ```
+
+Let's see some parameters:  
+1) `expires: 0` is needed to block ssh access to nodes from master machine. Users should only use cluster scheduler, e.g. slurm, AGE, SGE, et cetera.  
+2) `create_home: no` turns off creating home directory for adding user. Home directory was created when user was added to master machine.
