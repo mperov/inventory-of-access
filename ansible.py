@@ -38,7 +38,7 @@ def getPingPlayBook():
     yaml.explicit_start = True # --- at the beginning of yaml
     return yaml.dump(content)
 
-def getUsersPlayBook(users = [], groups = []):
+def getUsersPlayBook(users = [], groups = [], args = {'expires' : 0, 'create_home' : 'no'}):
     content = [
                 {
                     'name'      : 'Add user with UID, GID and additional groups',
@@ -51,14 +51,13 @@ def getUsersPlayBook(users = [], groups = []):
         task = {
                 'name' : 'adding ' + user,
                 'user' : {
-                            'name' : user,
-                            'append' : 'yes',
-                            'uid' : str(users[user][0]),
-                            'group' : str(users[user][1]),
-                            'expires' : 0,
-                            'create_home' : 'no'
+                            'name'          : user,
+                            'append'        : 'yes',
+                            'uid'           : str(users[user][0]),
+                            'group'         : str(users[user][1]),
                          }
                }
+        task['user'].update(args)
         grp = []
         for group in groups:
             if user in groups[group]['users']:
@@ -85,8 +84,8 @@ def getGroupsPlayBook(groups = []):
         task = {
                 'name' : 'adding ' + group,
                 'group' : {
-                            'name' : group,
-                            'gid' : groups[group]['GID']
+                            'name'  : group,
+                            'gid'   : groups[group]['GID']
                           }
                }
         tasks.append(task)
