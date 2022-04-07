@@ -56,7 +56,7 @@ $ ./inventory.py -m group
 
 This generates the playbook is used for adding groups. It can help to add groups on all machine on a cluster via ansible.
 ```
-$ ./inventory.py -y groups
+$ ./inventory.py yaml -t groups
 YAML is successfully generating to playbook.yml
 This file should be in your current directory!
 ```
@@ -92,7 +92,7 @@ $ cat playbook.yml
 
 It generates ansible playbook for adding users.
 ```
-$ ./inventory.py -y users
+$ ./inventory.py yaml -t users
 YAML is successfully generating to playbook.yml
 This file should be in your current directory!
 ```
