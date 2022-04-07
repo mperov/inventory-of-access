@@ -94,8 +94,6 @@ if __name__ == "__main__":
                         help="working mode. This argument is main!", metavar="table or user or group")
     parser.add_argument("-gh", "--get-hash", dest="hash",
                         help="getting of hash. This is alternative argument to main!", metavar="all or group or user")
-    parser.add_argument("-y", "--yaml", dest="yaml",
-                        help="generating yaml which can be used to ansible. This is alternative argument to main!", metavar="users or groups")
     parser.add_argument("-eu", "--excluded-users", dest="eu",
                         help="list of users which are excluded", metavar="root,user1,...")
     parser.add_argument("-eg", "--excluded-groups", dest="eg",
@@ -108,6 +106,14 @@ if __name__ == "__main__":
                         help="it allows to reduce table. This option deletes groups which don't have any participant.")
     parser.add_argument("-d", "--debug", action='store_true',
                         help="this option enables debug mode")
+    subparsers = parser.add_subparsers(dest="yaml")
+    parser_yaml = subparsers.add_parser("yaml")
+    parser_yaml.add_argument("-t", "--target", dest="yaml_target",
+                            help="generating yaml which can be used to ansible. This is alternative argument to mode!", metavar="users or groups")
+    parser_yaml.add_argument("-ch", "--create_home", dest="yaml_home",
+                            help="modifying yaml option 'create_home'", metavar="yes or no")
+    parser_yaml.add_argument("-exp", "--expired", dest="yaml_expired",
+                            help="set yaml option 'expires : 0' or not", metavar="yes or no")
     args = parser.parse_args()
     debug = args.debug
     eu, eg = [], []
@@ -159,24 +165,35 @@ if __name__ == "__main__":
         else:
             parser.print_help()
     elif args.yaml:
-        from ansible import *
-        mode = args.yaml.strip()
-        if mode == 'users':
-            users = getUsers(excluded = eu, included = iu)
-            groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
-            if debug:
-                print(getUsersPlayBook(users, groups), end = '')
+        if args.yaml_target:
+            from ansible import *
+            mode = args.yaml_target.strip()
+            if mode == 'users':
+                users = getUsers(excluded = eu, included = iu)
+                groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
+                arguments = {'expires' : 0, 'create_home' : 'no'}
+                if args.yaml_home:
+                    create = args.yaml_home.strip()
+                    arguments.update({'create_home' : create})
+                if args.yaml_expired:
+                    exp = args.yaml_expired.strip()
+                    if exp == 'no':
+                        del arguments['expires']
+                if debug:
+                    print(getUsersPlayBook(users, groups, arguments), end = '')
+                else:
+                    playbook = getUsersPlayBook(users, groups, arguments)
+                    writePlayBook(playbook)
+            elif mode == 'groups':
+                groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
+                if debug:
+                    print(getGroupsPlayBook(groups), end = '')
+                else:
+                    playbook = getGroupsPlayBook(groups)
+                    writePlayBook(playbook)
             else:
-                playbook = getUsersPlayBook(users, groups)
-                writePlayBook(playbook)
-        elif mode == 'groups':
-            groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
-            if debug:
-                print(getGroupsPlayBook(groups), end = '')
-            else:
-                playbook = getGroupsPlayBook(groups)
-                writePlayBook(playbook)
+                parser_yaml.print_help()
         else:
-            parser.print_help()
+            parser_yaml.print_help()
     else:
         parser.print_help()
