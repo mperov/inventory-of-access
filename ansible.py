@@ -48,7 +48,17 @@ def getUsersPlayBook(users = [], groups = []):
               ]
     tasks = []
     for user in users:
-        task = { 'name' : 'adding ' + user, 'user' : {'name' : user, 'append' : 'yes', 'uid' : str(users[user][0]), 'group' : str(users[user][1]), 'expires' : 0, 'create_home' : 'no'} }
+        task = {
+                'name' : 'adding ' + user,
+                'user' : {
+                            'name' : user,
+                            'append' : 'yes',
+                            'uid' : str(users[user][0]),
+                            'group' : str(users[user][1]),
+                            'expires' : 0,
+                            'create_home' : 'no'
+                         }
+               }
         grp = []
         for group in groups:
             if user in groups[group]['users']:
@@ -72,7 +82,13 @@ def getGroupsPlayBook(groups = []):
               ]
     tasks = []
     for group in groups:
-        task = { 'name' : 'adding ' + group, 'group' : {'name' : group, 'gid' : groups[group]['GID']} }
+        task = {
+                'name' : 'adding ' + group,
+                'group' : {
+                            'name' : group,
+                            'gid' : groups[group]['GID']
+                          }
+               }
         tasks.append(task)
     content[0].update({ 'tasks' : tasks })
     yaml = CustomYAML()
