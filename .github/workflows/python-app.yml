@@ -25,6 +25,7 @@ jobs:
         python-version: "3.10"
     - name: Install dependencies
       run: |
+        sudo apt install ansible
         python -m pip install --upgrade pip
         pip install flake8
         if [ -f requirements ]; then pip install -r requirements; fi
@@ -37,3 +38,8 @@ jobs:
     - name: Simple test
       run: 
         python inventory.py -m table
+        python inventory.py -m user
+        python inventory.py yaml -t users
+        ansible-playbook playbook.yml --check
+        python inventory.py yaml -t groups
+        ansible-playbook playbook.yml --check
