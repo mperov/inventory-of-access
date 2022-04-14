@@ -1,5 +1,5 @@
 # Inventory of access
-[![Python application](https://github.com/mperov/inventory-of-access/actions/workflows/python-app.yml/badge.svg)](https://github.com/mperov/inventory-of-access/actions/workflows/python-app.yml)
+[![Python application](https://github.com/mperov/inventory-of-access/workflows/Python%20application/badge.svg?branch=master)](https://github.com/mperov/inventory-of-access/actions/workflows/python-app.yml)
 [![Contributors](https://img.shields.io/github/contributors/mperov/showGroups?label=Contributors)](https://github.com/mperov/showGroups/graphs/contributors)
 
 ## Description
