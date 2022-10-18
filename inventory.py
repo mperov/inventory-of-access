@@ -36,7 +36,7 @@ def getGroups(excluded = [], included = [], excludedUsers = []):
             _list = line.split(":")
             name = _list[0]
             participants = _list[3]
-            if participants.strip() != '':
+            if participants.strip() != '' or (included and name in included):
                 users = sorted(participants.split('\n')[0].split(','))
                 for user in excludedUsers:
                     if user in users:
