@@ -22,11 +22,11 @@ def getUsers(excluded = [], included = []):
             name = splited[0]
             if 'home' in homePath and shell in ['bash', 'sh']:
                 if included and name in included:
-                    users.update({name : [splited[2], splited[3]]})
+                    users.update({name : [splited[2], splited[3], splited[-2]]})
                 elif excluded and name not in excluded:
-                    users.update({name : [splited[2], splited[3]]})
+                    users.update({name : [splited[2], splited[3], splited[-2]]})
                 elif included == [] and excluded == []:
-                    users.update({name : [splited[2], splited[3]]})
+                    users.update({name : [splited[2], splited[3], splited[-2]]})
     return users
 
 def getGroups(excluded = [], included = [], excludedUsers = []):

@@ -55,6 +55,7 @@ def getUsersPlayBook(users = [], groups = [], args = {'expires' : 0, 'create_hom
                             'append'        : 'yes',
                             'uid'           : str(users[user][0]),
                             'group'         : str(users[user][1]),
+                            'home'          : str(users[user][2]),
                          }
                }
         task['user'].update(args)
