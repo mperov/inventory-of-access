@@ -20,7 +20,7 @@ def getUsers(excluded = [], included = []):
             shell = splited[-1:][0].split('\n')[0].split('/')[-1:][0]
             homePath = splited[-2:][0].split('/')
             name = splited[0]
-            if 'home' in homePath and shell in ['bash', 'sh']:
+            if shell in ['bash', 'sh']:
                 if included and name in included:
                     users.update({name : [splited[2], splited[3], splited[-2]]})
                 elif excluded and name not in excluded:
