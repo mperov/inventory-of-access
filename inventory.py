@@ -180,9 +180,9 @@ if __name__ == "__main__":
                     if exp == 'no':
                         del arguments['expires']
                 if debug:
-                    print(getUsersPlayBook(users, groups, arguments), end = '')
+                    print(getUsersPlayBook(users, groups, arguments, included = iu), end = '')
                 else:
-                    playbook = getUsersPlayBook(users, groups, arguments)
+                    playbook = getUsersPlayBook(users, groups, arguments, included = iu)
                     writePlayBook(playbook)
             elif mode == 'groups':
                 groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
