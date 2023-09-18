@@ -178,7 +178,7 @@ if __name__ == "__main__":
                 if args.yaml_expired:
                     exp = args.yaml_expired.strip()
                     if exp == 'no':
-                        del arguments['expires']
+                        arguments['expires'] = '-1'
                 if debug:
                     print(getUsersPlayBook(users, groups, arguments, included = iu), end = '')
                 else:
