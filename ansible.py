@@ -24,7 +24,7 @@ def getPingPlayBook():
     content = [ # using list allows to prepend '-' (dash symbol)
                 {
                     'name'  : 'Ping pong',
-                    'hosts' : 'all',
+                    'hosts' : '"{{ HOST }}"',
                     'tasks' :
                     [ # using list allows to prepend '-' (dash symbol)
                         {
