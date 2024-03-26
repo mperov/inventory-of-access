@@ -24,7 +24,7 @@ def getPingPlayBook():
     content = [ # using list allows to prepend '-' (dash symbol)
                 {
                     'name'  : 'Ping pong',
-                    'hosts' : '"{{ HOST }}"',
+                    'hosts' : '{{ HOST }}',
                     'tasks' :
                     [ # using list allows to prepend '-' (dash symbol)
                         {
@@ -42,7 +42,7 @@ def getUsersPlayBook(users = [], groups = [], args = {'expires' : 0, 'create_hom
     content = [
                 {
                     'name'      : 'Add user with UID, GID and additional groups',
-                    'hosts'     : '"{{ HOST }}"',
+                    'hosts'     : '{{ HOST }}',
                     'become'    : 'yes',
                 }
               ]
@@ -76,7 +76,7 @@ def getGroupsPlayBook(groups = []):
     content = [
                 {
                     'name'      : 'Add additional groups',
-                    'hosts'     : '"{{ HOST }}"',
+                    'hosts'     : '{{ HOST }}',
                     'become'    : 'yes',
                 }
               ]
