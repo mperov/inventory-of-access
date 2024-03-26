@@ -42,7 +42,7 @@ def getUsersPlayBook(users = [], groups = [], args = {'expires' : 0, 'create_hom
     content = [
                 {
                     'name'      : 'Add user with UID, GID and additional groups',
-                    'hosts'     : 'all',
+                    'hosts'     : '"{{ HOST }}"',
                     'become'    : 'yes',
                 }
               ]
@@ -76,7 +76,7 @@ def getGroupsPlayBook(groups = []):
     content = [
                 {
                     'name'      : 'Add additional groups',
-                    'hosts'     : 'all',
+                    'hosts'     : '"{{ HOST }}"',
                     'become'    : 'yes',
                 }
               ]
