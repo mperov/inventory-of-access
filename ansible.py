@@ -95,7 +95,7 @@ def getGroupsPlayBook(groups = []):
     yaml.explicit_start = True # --- at the beginning of yaml
     return yaml.dump(content)
 
-def writePlayBook(filename = FILE_PLAYBOOK, playbook = getPingPlayBook()):
+def writePlayBook(playbook = getPingPlayBook(), filename = FILE_PLAYBOOK):
     try:
         with open(filename, "w") as f:
             f.write(playbook)
