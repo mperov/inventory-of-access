@@ -40,6 +40,6 @@ jobs:
         python inventory.py -m table
         python inventory.py -m user
         python inventory.py yaml -t users
-        ansible-playbook playbook.yml --check -e HOST=localhost
+        ansible-playbook users_playbook.yml --check -e HOST=localhost
         python inventory.py yaml -t groups
-        ansible-playbook playbook.yml --check -e HOST=localhost
+        ansible-playbook groups_playbook.yml --check -e HOST=localhost
