@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2022 Maksim Perov <coder@frtk.ru>
+# Copyright (c) 2024 Maksim Perov <coder@frtk.ru>
 #
 
 from argparse import ArgumentParser
@@ -183,14 +183,14 @@ if __name__ == "__main__":
                     print(getUsersPlayBook(users, groups, arguments, included = iu), end = '')
                 else:
                     playbook = getUsersPlayBook(users, groups, arguments, included = iu)
-                    writePlayBook(playbook)
+                    writePlayBook(playbook, "users_playbook.yml")
             elif mode == 'groups':
                 groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)
                 if debug:
                     print(getGroupsPlayBook(groups), end = '')
                 else:
                     playbook = getGroupsPlayBook(groups)
-                    writePlayBook(playbook)
+                    writePlayBook(playbook, "groups_playbook.yml")
             else:
                 parser_yaml.print_help()
         else:
