@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (c) 2022 Maksim Perov <coder@frtk.ru>
+# Copyright (c) 2024 Maksim Perov <coder@frtk.ru>
 #
 
 import sys
@@ -95,12 +95,12 @@ def getGroupsPlayBook(groups = []):
     yaml.explicit_start = True # --- at the beginning of yaml
     return yaml.dump(content)
 
-def writePlayBook(playbook = getPingPlayBook()):
+def writePlayBook(filename = FILE_PLAYBOOK, playbook = getPingPlayBook()):
     try:
-        with open(FILE_PLAYBOOK , "w") as f:
+        with open(filename, "w") as f:
             f.write(playbook)
     except Exception as e:
-        print("ERROR: " + FILE_PLAYBOOK + " isn't writable!")
+        print("ERROR: " + filename + " isn't writable!")
         print(str(e))
         sys.exit(-1)
     print('YAML is successfully generating to ' + FILE_PLAYBOOK)
