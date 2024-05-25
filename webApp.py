@@ -30,9 +30,9 @@ def sendGroups():
     if DEBUG:
         print(inspect.currentframe().f_code.co_name)
     info = request.get_json(force=True)
-    ig = []
-    eg = []
-    eu = []
+    ig = [] # groups should be included
+    eg = [] # groups should be excluded
+    eu = [] # users should be excluded
     try:
         if 'ig' in info:
             ig = info['ig']
