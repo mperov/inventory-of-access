@@ -133,11 +133,11 @@ Let's see some parameters:
 
 #### The third - web server to generate Ansible playbook
 
-1. Start WEB server on 8080 port:  
+1. **On server**: start WEB server on 8080 port:  
 ```console
 $ ./webApp.py
 ```
-2. Get generated ansible playbook via http:  
+2. **On client**: get generated ansible playbook via http for adding groups:  
 ```console
 $ curl -H "Content-Type: application/json" -X POST --data '{"ig" : [] , "eg" : ["lxd", "video", "plugdev", "adm"], "eu" : []}' -sS http://localhost:8080/inventory/groups
 ---
@@ -163,5 +163,36 @@ $ curl -H "Content-Type: application/json" -X POST --data '{"ig" : [] , "eg" : [
       gid: '27'
 ```  
 "ig" is "included groups"  
-"eg" means "exluded groups"  
-"eu" means "exluded users"
+"eg" means "excluded groups"  
+"eu" means "excluded users"  
+3. **On client**: get generated ansible playbook via http for adding users with right permissions:  
+```console
+$ curl -H "Content-Type: application/json" -X POST --data '{"eg" : ["lxd", "video", "plugdev", "adm", "cdrom"], "iu" : "root,coder"}' -sS http://localhost:8080/inventory/users
+---
+- name: Add user with UID, GID and additional groups
+  hosts: '{{ HOST }}'
+  become: yes
+  tasks:
+  - name: adding root
+    user:
+      name: root
+      append: yes
+      uid: '0'
+      group: '0'
+      home: /root
+      expires: 0
+      create_home: no
+      groups: ''
+  - name: adding coder
+    user:
+      name: coder
+      append: yes
+      uid: '1000'
+      group: '1000'
+      home: /home/coder
+      expires: 0
+      create_home: no
+      groups: voice,sudo,audio,dip,lpadmin,pulse,pulse-access,sambashare
+```  
+"eg" means "excluded groups"  
+"iu" means "included users"
