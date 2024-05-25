@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 from gevent.pywsgi import WSGIServer
 import inspect
 import json
 import sys
+from inventory import getGroups, getUsers
+from ansible import getGroupsPlayBook, getUsersPlayBook, writePlayBook
 
 app = Flask(__name__)
 
@@ -22,6 +24,25 @@ def index():
     if DEBUG:
         print(inspect.currentframe().f_code.co_name)
     return render_template("/inventory/index.html")
+
+@app.route('/inventory/groups', methods=["GET", "POST"])
+def sendGroups():
+    if DEBUG:
+        print(inspect.currentframe().f_code.co_name)
+    groups = getGroups();
+    playbook = getGroupsPlayBook(groups)
+    writePlayBook(playbook, "groups_playbook.yml")
+    return send_from_directory(app.root_path, "groups_playbook.yml")
+
+@app.route('/inventory/users', methods=["GET", "POST"])
+def sendUsers():
+    if DEBUG:
+        print(inspect.currentframe().f_code.co_name)
+    groups = getGroups();
+    users = getUsers();
+    playbook = getUsersPlayBook(users, groups)
+    writePlayBook(playbook, "users_playbook.yml")
+    return send_from_directory(app.root_path, "users_playbook.yml")
 
 if __name__ == '__main__':
     if DEBUG:
