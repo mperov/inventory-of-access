@@ -29,7 +29,16 @@ def index():
 def sendGroups():
     if DEBUG:
         print(inspect.currentframe().f_code.co_name)
-    groups = getGroups();
+    info = request.get_json(force=True)
+    try:
+        ig = info['ig']
+        eg = info['eg']
+        eu = info['eu']
+    except:
+        text = "Incorrect json data filling!"
+        return jsonify(result=text)
+
+    groups = getGroups(excluded = eg, included = ig, excludedUsers = eu);
     playbook = getGroupsPlayBook(groups)
     writePlayBook(playbook, "groups_playbook.yml")
     return send_from_directory(app.root_path, "groups_playbook.yml")
