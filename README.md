@@ -10,8 +10,19 @@ So **inventory-of-access** tris to help you to get informations about users in L
 Moreover this project can help to synchronize users and groups in clusters. In most cases clusters are based on NFS servers.
 NFS server requires synchronized UIDs and GIDs on all machines in clusters.
 
-## Requirements
-Install some Python modules - `pip3 install -r requirements` or `python3 -m pip install -r requirements`  
+## How to start
+1. Get project:
+```console
+$ git clone --recursive https://github.com/mperov/inventory-of-access.git
+$ cd inventory-of-access/
+```
+2. Create special Python virtual enviroment by
+```console
+$ sudo apt-get install python3-venv -y
+$ python3 -m venv inventory-of-access
+$ source inventory-of-access/bin/activate
+```
+3. Install some Python modules - `pip3 install -r requirements` or `python3 -m pip install -r requirements`  
 If you don't have pip3 then you may install it [how described here](https://pip.pypa.io/en/stable/installation/)
 
 ## How to use
