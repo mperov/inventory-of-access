@@ -30,10 +30,16 @@ def sendGroups():
     if DEBUG:
         print(inspect.currentframe().f_code.co_name)
     info = request.get_json(force=True)
+    ig = []
+    eg = []
+    eu = []
     try:
-        ig = info['ig']
-        eg = info['eg']
-        eu = info['eu']
+        if 'ig' in info:
+            ig = info['ig']
+        if 'eg' in info:
+            eg = info['eg']
+        if 'eu' in info:
+            eu = info['eu']
     except:
         text = "Incorrect json data filling!"
         return jsonify(result=text)
