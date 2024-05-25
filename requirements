@@ -1,2 +1,4 @@
 prettytable
 ruamel.yaml
+flask
+gevent
