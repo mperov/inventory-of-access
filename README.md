@@ -27,7 +27,7 @@ If you don't have pip3 then you may install it [how described here](https://pip.
 
 ## How to use
 
-There are two main ways using of inventory-of-access.
+There are three main ways using of inventory-of-access.
 
 #### The frist - showing some tables
 It allows to understand what users are in what groups:  
@@ -130,3 +130,38 @@ $ cat playbook.yml
 Let's see some parameters:  
 1) `expires: 0` is needed to block ssh access to nodes from master machine. Users should only use cluster scheduler, e.g. slurm, AGE, SGE, et cetera.  
 2) `create_home: no` turns off creating home directory for adding user. Home directory was created when user was added to master machine.
+
+#### The third - web server to generate Ansible playbook
+
+1. Start WEB server on 8080 port:  
+```console
+$ ./webApp.py
+```
+2. Get generated ansible playbook via http:  
+```console
+$ curl -H "Content-Type: application/json" -X POST --data '{"ig" : [] , "eg" : ["lxd", "video", "plugdev", "adm"], "eu" : []}' -sS http://localhost:8080/inventory/groups
+---
+- name: Add additional groups
+  hosts: '{{ HOST }}'
+  become: yes
+  tasks:
+  - name: adding tty
+    group:
+      name: tty
+      gid: '5'
+  - name: adding voice
+    group:
+      name: voice
+      gid: '22'
+  - name: adding cdrom
+    group:
+      name: cdrom
+      gid: '24'
+  - name: adding sudo
+    group:
+      name: sudo
+      gid: '27'
+```  
+"ig" is "included groups"  
+"eg" means "exluded groups"  
+"eu" means "exluded users"
