@@ -103,5 +103,5 @@ def writePlayBook(playbook = getPingPlayBook(), filename = FILE_PLAYBOOK):
         print("ERROR: " + filename + " isn't writable!")
         print(str(e))
         sys.exit(-1)
-    print('YAML is successfully generating to ' + FILE_PLAYBOOK)
+    print('YAML is successfully generating to ' + filename)
     print('This file should be in your current directory!')
