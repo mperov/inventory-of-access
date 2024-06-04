@@ -68,6 +68,10 @@ def sendUsers():
             eu = info['eu']
         if 'iu' in info:
             iu = info['iu']
+        if 'args' in info:
+            if len(info['args']) == 2:
+                if 'expires' in info['args'] and 'create_home' in info['args']:
+                    arguments = info['args']
     except:
         text = "Incorrect json data filling!"
         return jsonify(result=text)
