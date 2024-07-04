@@ -180,9 +180,9 @@ if __name__ == "__main__":
                     if exp == 'no':
                         arguments['expires'] = '-1'
                 if debug:
-                    print(getUsersPlayBook(users, groups, arguments, included = iu), end = '')
+                    print(getUsersPlayBook(users, groups, arguments), end = '')
                 else:
-                    playbook = getUsersPlayBook(users, groups, arguments, included = iu)
+                    playbook = getUsersPlayBook(users, groups, arguments)
                     writePlayBook(playbook, "users_playbook.yml")
             elif mode == 'groups':
                 groups = getGroups(excluded = eg, included = ig, excludedUsers = eu)

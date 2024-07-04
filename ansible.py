@@ -38,7 +38,7 @@ def getPingPlayBook():
     yaml.explicit_start = True # --- at the beginning of yaml
     return yaml.dump(content)
 
-def getUsersPlayBook(users = [], groups = [], args = {'expires' : 0, 'create_home' : 'no'}, included = []):
+def getUsersPlayBook(users = [], groups = [], args = {'expires' : 0, 'create_home' : 'no'}):
     content = [
                 {
                     'name'      : 'Add user with UID, GID and additional groups',
@@ -65,8 +65,7 @@ def getUsersPlayBook(users = [], groups = [], args = {'expires' : 0, 'create_hom
                 grp.append(group)
         grps = ','.join(grp)
         task['user'].update({'groups' : grps})
-        if grps != '' or (included and user in included):
-            tasks.append(task)
+        tasks.append(task)
     content[0].update({ 'tasks' : tasks })
     yaml = CustomYAML()
     yaml.explicit_start = True # --- at the beginning of yaml
