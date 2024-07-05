@@ -78,7 +78,7 @@ def sendUsers():
 
     groups = getGroups(excluded = eg, included = ig, excludedUsers = eu);
     users = getUsers(excluded = eu, included = iu);
-    playbook = getUsersPlayBook(users, groups, arguments, included = iu)
+    playbook = getUsersPlayBook(users, groups, arguments)
     writePlayBook(playbook, "users_playbook.yml")
     return send_from_directory(app.root_path, "users_playbook.yml")
 
